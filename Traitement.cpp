@@ -12,3 +12,4 @@ float somme_deltaT(Arbre ab) {
 	}
 }
 
+//
