@@ -168,6 +168,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Arbre.cpp" />
+    <ClCompile Include="fonctionsLibgraph.cpp" />
     <ClCompile Include="ListeStation.cpp" />
     <ClCompile Include="mainLectureData.cpp" />
     <ClCompile Include="SAE_Datas_Heat.cpp" />
@@ -180,6 +181,7 @@
     <ClInclude Include="Arbre.h" />
     <ClInclude Include="CelluleArbre.h" />
     <ClInclude Include="CelluleStation.h" />
+    <ClInclude Include="fonctionsLibgraph.h" />
     <ClInclude Include="ListeStation.h" />
     <ClInclude Include="SAE_Datas_Heat.h" />
     <ClInclude Include="Traitement.h" />
