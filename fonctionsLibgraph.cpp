@@ -3,6 +3,8 @@
 #include <array>
 #include <vector>
 #include <algorithm>
+
+
 using namespace LibGraph2;
 
 /*!
@@ -12,6 +14,7 @@ using namespace LibGraph2;
  */
 void displayClairFonce(const std::vector<float>& data, size_t colorNb)
 {
+    
     //Tableau contenant les couleurs de la représentation (du plus chaud au plus froid)
     std::array<ARGB, 8> colors{ MakeARGB(255, 3, 4, 94), MakeARGB(255, 2, 62, 138), MakeARGB(255, 0, 180, 216), MakeARGB(255, 173, 232, 244),
     MakeARGB(255, 249, 237, 204), MakeARGB(255, 230, 96, 99), MakeARGB(255, 208, 34, 36), MakeARGB(255, 156, 25, 27) };
@@ -53,6 +56,7 @@ void displayClairFonce(const std::vector<float>& data, size_t colorNb)
     //Boucle principale d'événements
     while (libgraph->waitForEvent(e))
     {
+
         switch (e.type)  //En fonction du type d'événement
         {
         case evt_type::evtRefresh:  //Raffraichissement de l'affichage (tout redessiner)
@@ -74,6 +78,7 @@ void displayClairFonce(const std::vector<float>& data, size_t colorNb)
                     lineNb++;
                     colNb = 0;
                 }
+
                 ARGB color = colors[colorNb - 1];
                 //On cherche la couleur de la valeur
                 for (size_t j = 0; j < colorNb; j++)
@@ -106,6 +111,7 @@ void displayClairFonce(const std::vector<float>& data, size_t colorNb)
  */
 void displaySpirale(const std::vector<float>& sommeMoyStation)
 {
+    
     //Récupération de l'objet principal de LibGraph 2
     ILibGraph2* libgraph = GetLibGraph2();
     //Affiche la fenêtre graphique avec une taille par défaut
@@ -171,9 +177,12 @@ void displaySpirale(const std::vector<float>& sommeMoyStation)
         case evt_type::evtRefresh:  //Raffraichissement de l'affichage (tout redessiner)
           //Utiliser éventuellement les fonctions libgraph->beginPaint() / libgraph->endPaint() pour activer le backbuffer
             libgraph->beginPaint();
+            
+            //libgraph->drawString("Graphique Spirale", CPoint(20, 20));
             //Utiliser ici les fonctions de dessins
 
             for (size_t i = 1; i < vCpointGraph.size(); i++) {
+
                 libgraph->setSolidBrush(MakeARGB(255, 0, 0, 0));
                 // Affichage des points pour tracer chaque traits
                 libgraph->drawEllipse(CRectangle{ vCpointGraph[i - 1], CSize{ 5, 5 } });
