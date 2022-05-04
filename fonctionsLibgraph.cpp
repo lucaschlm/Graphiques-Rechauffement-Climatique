@@ -15,11 +15,15 @@ void displayClairFonce(const std::vector<float>& data, size_t colorNb)
     //Tableau contenant les couleurs de la représentation (du plus chaud au plus froid)
     std::array<ARGB, 8> colors{ MakeARGB(255, 3, 4, 94), MakeARGB(255, 2, 62, 138), MakeARGB(255, 0, 180, 216), MakeARGB(255, 173, 232, 244),
     MakeARGB(255, 249, 237, 204), MakeARGB(255, 230, 96, 99), MakeARGB(255, 208, 34, 36), MakeARGB(255, 156, 25, 27) };
+    
+
     //On calcule les intervalles de températures
     float maxTemp = *std::max_element(data.begin(), data.end());
     float minTemp = *std::min_element(data.begin(), data.end());
     float deltaTemp = maxTemp - (minTemp - 1);
     float interval = deltaTemp / static_cast<float>(colorNb);
+
+
     //Tableau contenant les intervals de valeurs (0-1, 1-2, ..., 6-7, 7+)
     std::vector<float> intervals;
     intervals.resize(colorNb);
