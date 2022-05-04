@@ -22,16 +22,27 @@ void displayClairFonce(const std::vector<float>& data, size_t colorNb)
     float minTemp = *std::min_element(data.begin(), data.end());
     float deltaTemp = maxTemp - (minTemp - 1);
     float interval = deltaTemp / static_cast<float>(colorNb);
+    //Tableau contenant les intervals de valeurs (0-1, 1-2, ..., 6-7, 7+)
     std::vector<float> intervals;
     intervals.resize(colorNb);
     for (size_t i = 0; i < colorNb; i++)
-        intervals[i] = minTemp + interval * (i + 1);
-/*
+        intervals[i] = minTemp + interval * i;
+
+
     //Récupération de l'objet principal de LibGraph 2
     ILibGraph2* libgraph = GetLibGraph2();
     //Affiche la fenêtre graphique avec une taille par défaut
     libgraph->show();
     evt e;  //Evénement LibGraph 2
+
+    //On récupère la taille de la fenètre
+    float width = libgraph->getSize().m_fWidth;
+    float height = libgraph->getSize().m_fHeight;
+
+    //On calcule la largeur d'un rectangle (12 mois sur la largeur)
+    float rectangleWidth = width / 12;
+    //Puis on calcul la hauteur (un rectangle par an)
+    float rectangleHeight = height / (data.size() / 12);
 
     //Boucle principale d'événements
     while (libgraph->waitForEvent(e))
@@ -44,22 +55,9 @@ void displayClairFonce(const std::vector<float>& data, size_t colorNb)
             //Utiliser ici les fonctions de dessins
             libgraph->endPaint();
             break;
-
-        case evt_type::evtKeyDown:  //Enfoncement d'une touche
-            switch (e.vkKeyCode) //En fonction de la touche enfoncée
-            {
-            case 'A':
-                break;
-            }
-            break;
-
-        case evt_type::evtMouseMove:  //Déplacement de la souris
-          //Position de la souris dans les variables e.x et e.y
-            break;
-        }
     }
 
     //Libération de l'objet principal de LibGraph 2
     ReleaseLibGraph2();
-*/
+
 }
