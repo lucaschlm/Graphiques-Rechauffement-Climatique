@@ -1,14 +1,10 @@
 #pragma once
 
 #include <iostream>
-
-#include "CelluleStation.h"
-#include "ListeStation.h"
-#include "CelluleArbre.h"
-#include "Arbre.h"
 #include <vector>
 
-float somme_deltaT(Arbre ab);
+std::vector<float> somme_Moy_Station(const std::vector<std::vector<float>>& vStationTmoy, size_t nbMonth);
+
 
 
 

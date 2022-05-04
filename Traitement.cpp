@@ -1,15 +1,14 @@
 #include "Traitement.h"
 
-//exemple de fonction pour l exploitation de la structure arborescente
-float somme_deltaT(Arbre ab) {
-
-	if (ab.get_rac() == nullptr) return 0;
-	else {
-		Arbre arbregauche(ab.get_rac()->_pFilsG);
-		Arbre arbredroit(ab.get_rac()->_pFilsD);
-
-		return ab.get_rac()->_deltaT + somme_deltaT(arbregauche) + somme_deltaT(arbredroit); // parcours prefixe
+std::vector<float> somme_Moy_Station(const std::vector<std::vector<float>>& vStationTmoy, size_t nbMonth)
+{
+	std::vector<float> sommeMoyStation(nbMonth);
+	for (size_t i = 0; i < nbMonth; i++) { // Boucle sur le nombre de mois
+		for (size_t j = 0; j < vStationTmoy.size(); j++) { // Boucle sur le nombre de station
+			sommeMoyStation[i] += vStationTmoy[j][i];
+		}
+		sommeMoyStation[i] /= vStationTmoy.size();
 	}
-}
 
-//
+	return sommeMoyStation;
+}

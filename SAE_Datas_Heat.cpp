@@ -142,20 +142,9 @@ void SAE_Datas_Heat::convertDataInList()
     // Parcours des maxStation stations, creation des cellules de la liste et des 12 arbres associes a chaque cellule
     // la creation d un arbre se fera via la fonction calculDeltaT que vous devez egalement completer
 
-    
-
+    _vIdStation = vIDstation;
+    _vStationTmoy = vStationTmoy;
   
-}
-
-Arbre SAE_Datas_Heat::calculDeltaT(size_t mois, const std::vector<float>& vTmoyStation, const std::vector<float>& vTSigmaStation)
-{
-    Arbre a;
-    int annee = 1992; // annee de départ
-  
-    // TO DO
-
-
-    return a;
 }
 
 
