@@ -10,8 +10,9 @@
  * quelques soient les fichiers sources.
  *
  */
+
 #pragma once
-/*!\brief Défini le niveau d'utilisation de LibGraph2 au niveau 3
+/*!\brief Défini le niveau d'utilisation de LibGraph2 au niveau 4
  */
 #define LIBGRAPH2_LEVEL 4
 #include <LibGraph2.h>
