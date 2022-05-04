@@ -23,5 +23,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
     displaySpirale(sommeMoyStation);
 
+    displayRaieDeCouleurs(sommeMoyStation);
+
     return 0;
 }
