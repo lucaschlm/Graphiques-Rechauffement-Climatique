@@ -27,7 +27,7 @@ void displayClairFonce(const std::vector<float>& data, size_t colorNb)
     float interval = deltaTemp / static_cast<float>(colorNb);
 
 
-    //Tableau contenant les intervals de valeurs (0-1, 1-2, ..., 6-7, 7+)
+    //Tableau contenant les intervalles de valeurs (0-1, 1-2, ..., 6-7, 7+)
     std::vector<float> intervals;
     intervals.resize(colorNb);
     for (size_t i = 0; i < colorNb; i++)
