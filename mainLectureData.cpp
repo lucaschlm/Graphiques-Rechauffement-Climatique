@@ -5,6 +5,7 @@
 #include "Traitement.h"
 #include <cmath>
 #include <iostream>
+#include "fonctionsLibgraph.h"
 using namespace LibGraph2;
 
 const float pi = 3.14159265358979323846;
@@ -16,16 +17,18 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
-
-    //Récupération de l'objet principal de LibGraph 2
+  
+    //RÃ©cupÃ©ration de l'objet principal de LibGraph 2
     ILibGraph2* libgraph = GetLibGraph2();
-    //Affiche la fenêtre graphique avec une taille par défaut
+    //Affiche la fenÃªtre graphique avec une taille par dÃ©faut
     libgraph->show(CSize{ 1000, 1000 });
-    evt e;  //Evénement LibGraph 2
+    evt e;  //EvÃ©nement LibGraph 2
 
     SAE_Datas_Heat myStations;
     std::vector<float> sommeMoyStation = somme_Moy_Station(myStations.getStationTmoy(), myStations.nbMonths());
 
+    displayClairFonce(sommeMoyStation);
+  
     std::vector<CPoint> vCpointGraph; // Vecteur contenant tous les points calculer avec les formules
     size_t cptAnnee = 1; // Compteur pour compter le nombre d'annee
     float coef = 500.0f; // Coefficient pour centrer le graphique dans la fenetre de 1000x1000
@@ -33,7 +36,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
     
     for (size_t i = 13; i < sommeMoyStation.size() + 1; i++) { // On parcours tous les mois
         float T = ((sommeMoyStation[i - 1] - sommeMoyStation[i - 1 - (12 * cptAnnee)]) + 5) * 50;
-        switch (i - (12 * cptAnnee)) // Switch pour savoir le mois en cours (janvier, février, ...)
+        switch (i - (12 * cptAnnee)) // Switch pour savoir le mois en cours (janvier, fÃ©vrier, ...)
         {
         case 1: // Janvier
             vCpointGraph.push_back(CPoint{ coef, T + coef });
@@ -78,13 +81,13 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
         }
     }
 
-    //Boucle principale d'événements
+    //Boucle principale d'Ã©vÃ©nements
     while (libgraph->waitForEvent(e))
     {
-        switch (e.type)  //En fonction du type d'événement
+        switch (e.type)  //En fonction du type d'Ã©vÃ©nement
         {
         case evt_type::evtRefresh:  //Raffraichissement de l'affichage (tout redessiner)
-          //Utiliser éventuellement les fonctions libgraph->beginPaint() / libgraph->endPaint() pour activer le backbuffer
+          //Utiliser Ã©ventuellement les fonctions libgraph->beginPaint() / libgraph->endPaint() pour activer le backbuffer
             libgraph->beginPaint();
             //Utiliser ici les fonctions de dessins
 
@@ -108,7 +111,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
         }
     }
 
-    //Libération de l'objet principal de LibGraph 2
+    //LibÃ©ration de l'objet principal de LibGraph 2
     ReleaseLibGraph2();
     return 0;
 }
