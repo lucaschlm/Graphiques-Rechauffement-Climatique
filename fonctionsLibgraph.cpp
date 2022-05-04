@@ -205,3 +205,100 @@ void displaySpirale(const std::vector<float>& sommeMoyStation)
     //Libération de l'objet principal de LibGraph 2
     ReleaseLibGraph2();
 }
+
+void displayRaieDeCouleurs(const std::vector<float>& data)
+{
+    //Tableau contenant les couleurs de la représentation (du plus chaud au plus froid)
+    std::array<ARGB, 8> colors{ MakeARGB(255, 3, 4, 94), MakeARGB(255, 2, 62, 138), MakeARGB(255, 0, 180, 216), MakeARGB(255, 173, 232, 244),
+    MakeARGB(255, 249, 237, 204), MakeARGB(255, 230, 96, 99), MakeARGB(255, 208, 34, 36), MakeARGB(255, 156, 25, 27) };
+
+    //On créé un nouveau tableau contenant les températures moyennes par années
+    std::vector<float> tempPerYear(data.size() / 12);
+    float moy = 0;
+    size_t cpt = 0;
+    for (size_t i = 0; i < data.size(); i++)
+    {
+        if (i % 12 == 0 && i != 0)
+        {
+            moy /= 12.f;
+            tempPerYear[cpt] = moy;
+            cpt++;
+        }
+        moy += data[i];
+    }
+    //ne pas oublier la dernière valeur
+    moy /= 12.f;
+    tempPerYear[cpt] = moy;
+
+    //On calcule les intervalles de températures
+    float maxTemp = *std::max_element(tempPerYear.begin(), tempPerYear.end());
+    float minTemp = *std::min_element(tempPerYear.begin(), tempPerYear.end());
+    float deltaTemp = maxTemp - (minTemp - 1);
+    float interval = deltaTemp / 8.f;
+
+    //Tableau contenant les intervals de valeurs (0-1, 1-2, ..., 6-7, 7+)
+    std::vector<float> intervals;
+    intervals.resize(8);
+    for (size_t i = 0; i < 8; i++)
+        intervals[i] = minTemp + interval * i;
+
+
+    //Récupération de l'objet principal de LibGraph 2
+    ILibGraph2* libgraph = GetLibGraph2();
+    //Affiche la fenêtre graphique avec une taille par défaut
+    libgraph->show(CSize(700, 200));
+    evt e;  //Evénement LibGraph 2
+
+    //On récupère la taille de la fenêtre
+    float width = libgraph->getSize().m_fWidth;
+    float height = libgraph->getSize().m_fHeight;
+
+    float heightMargin = libgraph->getSize().m_fHeight * (10.f / 100.f);
+
+    //On calcule la largeur d'un rectangle
+    float rectangleWidth = width / tempPerYear.size();
+    //Puis on calcul la hauteur (un rectangle par an)
+    float rectangleHeight = (height/* - heightMargin*/);
+
+    //Boucle principale d'événements
+    while (libgraph->waitForEvent(e))
+    {
+        switch (e.type)  //En fonction du type d'événement
+        {
+        case evt_type::evtRefresh:  //Raffraichissement de l'affichage (tout redessiner)
+          //Utiliser éventuellement les fonctions libgraph->beginPaint() / libgraph->endPaint() pour activer le backbuffer
+            libgraph->beginPaint();
+
+            //On affiche le nom du graphique en haut à gauche
+            //libgraph->setFont(CString("Consolas"), 12, font_styles::FontStyleRegular);
+            //libgraph->drawString(CString("Clair-Fonce"), CPoint(0, 0));
+
+            size_t colNb = 0; //numero de colonne
+
+            //On parcourt toutes les valeurs
+            for (size_t i = 0; i < tempPerYear.size(); i++)
+            {
+                ARGB color = colors[7];
+                //On cherche la couleur de la valeur
+                for (size_t j = 0; j < 8; j++)
+                {
+                    if (tempPerYear[i] <= intervals[j])
+                    {
+                        color = colors[j];
+                        break;
+                    }
+                }
+                libgraph->setSolidBrush(color);
+                CRectangle rectangle(CPoint(rectangleWidth * colNb, 0), CSize(rectangleWidth, rectangleHeight));
+                libgraph->drawRectangle(rectangle);
+                colNb++;
+            }
+
+            libgraph->endPaint();
+            break;
+        }
+    }
+
+    //Libération de l'objet principal de LibGraph 2
+    ReleaseLibGraph2();
+}
