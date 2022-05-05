@@ -63,8 +63,8 @@ displayType displayClairFonce(const std::vector<float>& data, size_t colorNb)
             libgraph->beginPaint();
 
             //On affiche le nom du graphique en haut à gauche
-            libgraph->setFont(CString("Consolas"), 12, font_styles::FontStyleRegular);
-            libgraph->drawString(CString("Clair-Fonce"), CPoint(0, 0));
+            //libgraph->setFont(CString("Consolas"), 12, font_styles::FontStyleRegular);
+            //libgraph->drawString(CString("Clair-Fonce"), CPoint(0, 0));
 
             size_t lineNb = 0; //numero de ligne
             size_t colNb = 0; //numero de colonne
