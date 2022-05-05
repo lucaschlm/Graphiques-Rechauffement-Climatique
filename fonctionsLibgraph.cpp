@@ -12,7 +12,7 @@ using namespace LibGraph2;
  *  \param  data    - tableau contenant les températures
  *  \param  colorNb - Le nombre de couleurs différentes sur la représentation (max=8)
  */
-void displayClairFonce(const std::vector<float>& data, size_t colorNb)
+displayType displayClairFonce(const std::vector<float>& data, size_t colorNb)
 {
     
     //Tableau contenant les couleurs de la représentation (du plus chaud au plus froid)
@@ -36,8 +36,7 @@ void displayClairFonce(const std::vector<float>& data, size_t colorNb)
 
     //Récupération de l'objet principal de LibGraph 2
     ILibGraph2* libgraph = GetLibGraph2();
-    //Affiche la fenêtre graphique avec une taille par défaut
-    libgraph->show();
+    libgraph->show(CSize(1500, 700));
     evt e;  //Evénement LibGraph 2
 
     //On récupère la taille de la fenêtre
@@ -60,7 +59,8 @@ void displayClairFonce(const std::vector<float>& data, size_t colorNb)
         switch (e.type)  //En fonction du type d'événement
         {
         case evt_type::evtRefresh:  //Raffraichissement de l'affichage (tout redessiner)
-          //Utiliser éventuellement les fonctions libgraph->beginPaint() / libgraph->endPaint() pour activer le backbuffer
+            {
+            //Utiliser éventuellement les fonctions libgraph->beginPaint() / libgraph->endPaint() pour activer le backbuffer
             libgraph->beginPaint();
 
             //On affiche le nom du graphique en haut à gauche
@@ -97,19 +97,33 @@ void displayClairFonce(const std::vector<float>& data, size_t colorNb)
 
             libgraph->endPaint();
             break;
+            }
+        case evt_type::evtKeyDown:
+            switch (e.vkKeyCode)
+            {
+            case 'S':
+                return displayType::Spirale;
+                break;
+            case 'R':
+                return displayType::Raie;
+                break;
+            //case 0x1B:
+            //    ReleaseLibGraph2();
+            //    break;
+            case 0x70:
+                help();
+                break;
+            }
         }
     }
-
-    //Libération de l'objet principal de LibGraph 2
-    ReleaseLibGraph2();
-
+    return displayType::None;
 }
 
 /*!
  *  \brief  Fonction permettant d'afficher une représentation en spirale des températures
  *  \param  sommeMoyStation - tableau contenant les températures
  */
-void displaySpirale(const std::vector<float>& sommeMoyStation)
+displayType displaySpirale(const std::vector<float>& sommeMoyStation)
 {
     
     //Récupération de l'objet principal de LibGraph 2
@@ -198,15 +212,29 @@ void displaySpirale(const std::vector<float>& sommeMoyStation)
 
             libgraph->endPaint();
             break;
-
+        case evt_type::evtKeyDown:
+            switch (e.vkKeyCode)
+            {
+            case 'C':
+                return displayType::ClairFonce;
+                break;
+            case 'R':
+                return displayType::Raie;                
+                break;
+            //case 0x1B:
+            //    ReleaseLibGraph2();
+            //    break;
+            case 0x70:
+                //help();
+                break;
+            }
         }
     }
 
-    //Libération de l'objet principal de LibGraph 2
-    ReleaseLibGraph2();
+    return displayType::None;
 }
 
-void displayRaieDeCouleurs(const std::vector<float>& data)
+displayType displayRaieDeCouleurs(const std::vector<float>& data)
 {
     //Tableau contenant les couleurs de la représentation (du plus chaud au plus froid)
     std::array<ARGB, 8> colors{ MakeARGB(255, 3, 4, 94), MakeARGB(255, 2, 62, 138), MakeARGB(255, 0, 180, 216), MakeARGB(255, 173, 232, 244),
@@ -266,6 +294,7 @@ void displayRaieDeCouleurs(const std::vector<float>& data)
         switch (e.type)  //En fonction du type d'événement
         {
         case evt_type::evtRefresh:  //Raffraichissement de l'affichage (tout redessiner)
+        {
           //Utiliser éventuellement les fonctions libgraph->beginPaint() / libgraph->endPaint() pour activer le backbuffer
             libgraph->beginPaint();
 
@@ -297,8 +326,34 @@ void displayRaieDeCouleurs(const std::vector<float>& data)
             libgraph->endPaint();
             break;
         }
+        case evt_type::evtKeyDown:
+            switch (e.vkKeyCode)
+            {
+            case 'S':
+                return displayType::Spirale;
+                break;
+            case 'C':
+                return displayType::ClairFonce;
+                break;
+            //case 0x1B:
+            //    ReleaseLibGraph2();
+            //    break;
+            case 0x70:
+                //help();
+                break;
+            }
+        }
     }
 
-    //Libération de l'objet principal de LibGraph 2
-    ReleaseLibGraph2();
+    return displayType::None;
+}
+
+void help()
+{
+    GetLibGraph2()->guiMessageBox("Aide", "Commandes claviers :\n"
+        "C : Afficher la représentation Clair-Foncé\n"
+        "S : Afficher la représentation en spirale\n"
+        "R : Afficher la représentation en raie de couleurs\n"
+        "ESC : Fermer le logiciel proprement\n"
+        "F1 : Affiche cette aide", msgbtn_types::MsgBtnOK, msgicon_types::MsgIcnInformation);
 }

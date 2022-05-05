@@ -3,8 +3,18 @@
 
 const float pi = 3.14159265358979323846;
 
-void displayClairFonce(const std::vector<float>& data, size_t colorNb = 8);
+enum class displayType
+{
+	ClairFonce,
+	Spirale,
+	Raie,
+	None
+};
 
-void displaySpirale(const std::vector<float>& sommeMoyStation);
+displayType displayClairFonce(const std::vector<float>& data, size_t colorNb = 8);
 
-void displayRaieDeCouleurs(const std::vector<float>& data);
+displayType displaySpirale(const std::vector<float>& sommeMoyStation);
+
+displayType displayRaieDeCouleurs(const std::vector<float>& data);
+
+void help();
