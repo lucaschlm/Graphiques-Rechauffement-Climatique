@@ -44,6 +44,10 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
         case evt_type::evtKeyDown:  //Enfoncement d'une touche
             switch (e.vkKeyCode) //En fonction de la touche enfoncée
             {
+            case 'M':
+                FenetreEnCours = EFenetre::FenetreMenu;
+                libgraph->askForRefresh();
+                break;
             case 'C':
                 FenetreEnCours = EFenetre::FenetreClairFonce;
                 libgraph->askForRefresh();

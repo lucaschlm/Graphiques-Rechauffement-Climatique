@@ -1,4 +1,5 @@
 #pragma once
+#include "Menu.h"
 #include "Spirale.h"
 #include "ClairFonce.h"
 #include "RaieCouleurs.h"

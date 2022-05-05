@@ -18,6 +18,9 @@ CAplication::CAplication()
     SAE_Datas_Heat myStations;
     auto sommeMoyStation = somme_Moy_Station(myStations.getStationTmoy(), myStations.nbMonths());
 
+    CMenu menu;
+    m_vpgListGraph.push_back(std::make_shared<CMenu>(menu));
+
     CClairFonce clairFonce;
     clairFonce.CreateClairFonce(sommeMoyStation, 8);
     m_vpgListGraph.push_back(std::make_shared<CClairFonce>(clairFonce));
@@ -36,15 +39,16 @@ void CAplication::AfficherFenetre(EFenetre Fenetre) const
     switch (Fenetre)
     {
     case EFenetre::FenetreMenu:
-        break;
-    case EFenetre::FenetreClairFonce:
         m_vpgListGraph[0]->Afficher();
         break;
-    case EFenetre::FenetreSpirale:
+    case EFenetre::FenetreClairFonce:
         m_vpgListGraph[1]->Afficher();
         break;
-    case EFenetre::FenetreRaieCouleurs:
+    case EFenetre::FenetreSpirale:
         m_vpgListGraph[2]->Afficher();
+        break;
+    case EFenetre::FenetreRaieCouleurs:
+        m_vpgListGraph[3]->Afficher();
         break;
     default:
         break;
