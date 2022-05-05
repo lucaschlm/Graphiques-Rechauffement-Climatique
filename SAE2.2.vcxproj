@@ -167,23 +167,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Arbre.cpp" />
+    <ClCompile Include="ClairFonce.cpp" />
     <ClCompile Include="fonctionsLibgraph.cpp" />
-    <ClCompile Include="ListeStation.cpp" />
+    <ClCompile Include="Graphique.cpp" />
     <ClCompile Include="mainLectureData.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="RaieCouleurs.cpp" />
     <ClCompile Include="SAE_Datas_Heat.cpp" />
+    <ClCompile Include="Spirale.cpp" />
     <ClCompile Include="Traitement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Arbre.h" />
-    <ClInclude Include="CelluleArbre.h" />
-    <ClInclude Include="CelluleStation.h" />
+    <ClInclude Include="ClairFonce.h" />
     <ClInclude Include="fonctionsLibgraph.h" />
-    <ClInclude Include="ListeStation.h" />
+    <ClInclude Include="Graphique.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="RaieCouleurs.h" />
     <ClInclude Include="SAE_Datas_Heat.h" />
+    <ClInclude Include="Spirale.h" />
     <ClInclude Include="Traitement.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

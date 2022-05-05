@@ -1,10 +1,28 @@
 #pragma once
+#include "Spirale.h"
+#include "ClairFonce.h"
+#include "RaieCouleurs.h"
+#include "Traitement.h"
+
+#include <memory>
 #include <vector>
 
-const float pi = 3.14159265358979323846;
+enum class EFenetre
+{
+	FenetreMenu,
+	FenetreClairFonce,
+	FenetreSpirale,
+	FenetreRaieCouleurs
+};
 
-void displayClairFonce(const std::vector<float>& data, size_t colorNb = 8);
+class CAplication
+{
+private:
+	std::vector<std::shared_ptr<CGraphique>> m_vpgListGraph;
 
-void displaySpirale(const std::vector<float>& sommeMoyStation);
+public:
+	CAplication();
 
-void displayRaieDeCouleurs(const std::vector<float>& data);
+	void AfficherFenetre(EFenetre Fenetre) const;
+
+};
