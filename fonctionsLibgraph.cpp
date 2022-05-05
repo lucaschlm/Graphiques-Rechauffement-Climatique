@@ -14,7 +14,6 @@ using namespace LibGraph2;
  */
 displayType displayClairFonce(const std::vector<float>& data, size_t colorNb)
 {
-    
     //Tableau contenant les couleurs de la représentation (du plus chaud au plus froid)
     std::array<ARGB, 8> colors{ MakeARGB(255, 3, 4, 94), MakeARGB(255, 2, 62, 138), MakeARGB(255, 0, 180, 216), MakeARGB(255, 173, 232, 244),
     MakeARGB(255, 249, 237, 204), MakeARGB(255, 230, 96, 99), MakeARGB(255, 208, 34, 36), MakeARGB(255, 156, 25, 27) };
@@ -64,8 +63,8 @@ displayType displayClairFonce(const std::vector<float>& data, size_t colorNb)
             libgraph->beginPaint();
 
             //On affiche le nom du graphique en haut à gauche
-            //libgraph->setFont(CString("Consolas"), 12, font_styles::FontStyleRegular);
-            //libgraph->drawString(CString("Clair-Fonce"), CPoint(0, 0));
+            libgraph->setFont(CString("Consolas"), 12, font_styles::FontStyleRegular);
+            libgraph->drawString(CString("Clair-Fonce"), CPoint(0, 0));
 
             size_t lineNb = 0; //numero de ligne
             size_t colNb = 0; //numero de colonne

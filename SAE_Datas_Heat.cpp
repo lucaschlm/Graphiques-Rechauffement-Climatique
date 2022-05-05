@@ -27,18 +27,18 @@ std::vector<std::string>  SAE_Datas_Heat::listAllFiles()const {
 
 std::map<int, std::pair<float, float> > SAE_Datas_Heat::parseContentFile(std::string filename) {
     std::string file_contents;                                           // contenu du fichier CSV en un seul string
-    std::map<int, std::pair<float, float> > csv_contents; // contenu du fichier mis dans la structure de données on a à la fois l'ID de la station et une paire Tmoy Tsigma
+    std::map<int, std::pair<float, float> > csv_contents; // contenu du fichier mis dans la structure de donnÃ©es on a Ã  la fois l'ID de la station et une paire Tmoy Tsigma
     char delimiter = ';';
   
     file_contents = readFileIntoString(filename);
 
-    std::pair<float, float> TmoyTsigma;        // contiendra la température moyenne du mois et son écart type
+    std::pair<float, float> TmoyTsigma;        // contiendra la tempÃ©rature moyenne du mois et son Ã©cart type
     std::istringstream sstream(file_contents); // flux contenant tout le fichier CSV 
     std::vector< std::string > items;          // contiendra une ligne du fichier CSV sous forme de tableau de string 
     std::string sIndexStation;                 // nom de la station sous forme de string (par exemple "07005")
     std::string record;                        // contenu d'une ligne du fichier CSV comme un seul string
-    const size_t colTmoy = 3;                  // colonne du tableau contenant la température moyenne du mois
-    const size_t colTsigma = 4;                // colonne du tableau contenant les écarts-types moyen des températures du mois
+    const size_t colTmoy = 3;                  // colonne du tableau contenant la tempÃ©rature moyenne du mois
+    const size_t colTsigma = 4;                // colonne du tableau contenant les Ã©carts-types moyen des tempÃ©ratures du mois
 
     size_t counter = 0; // lignes du fichier CSV
     while (std::getline(sstream, record)) {
@@ -56,17 +56,17 @@ std::map<int, std::pair<float, float> > SAE_Datas_Heat::parseContentFile(std::st
         if (counter != 0) // On ne met pas la ligne avec les entetes de colonne
         {
             int indexStation = std::atoi(sIndexStation.c_str());
-            if (items[colTmoy].size() == 0 && items[colTsigma].size() == 0) // il n'y a rien à enregister
+            if (items[colTmoy].size() == 0 && items[colTsigma].size() == 0) // il n'y a rien Ã  enregister
             {
                 ; // Donc on fait rien
             }
             else
-                if(items[colTmoy].size() == 0)       // Tsigma existe alors que Tmoy n existe pas : erreur dans le fichier CSV c'est TMoy à la place de Tsigma
+                if(items[colTmoy].size() == 0)       // Tsigma existe alors que Tmoy n existe pas : erreur dans le fichier CSV c'est TMoy Ã  la place de Tsigma
                     TmoyTsigma = std::make_pair(std::stof(items[colTsigma]), 0.0);
                 else
-                    if(items[colTsigma].size() == 0) // Pas d'écart type
+                    if(items[colTsigma].size() == 0) // Pas d'Ã©cart type
                         TmoyTsigma = std::make_pair(std::stof(items[colTmoy]),0.0);
-                    else                             // CAS général on a Tmoy et Tsigma
+                    else                             // CAS gÃ©nÃ©ral on a Tmoy et Tsigma
                         TmoyTsigma = std::make_pair(std::stof(items[colTmoy]), std::stof(items[colTsigma]));
             csv_contents[indexStation]=TmoyTsigma;
         }
@@ -78,35 +78,35 @@ std::map<int, std::pair<float, float> > SAE_Datas_Heat::parseContentFile(std::st
 
 void SAE_Datas_Heat::convertDataInList()
 {
-    size_t maxStation = _vRawData[0].size(); // nombre de stations du premier mois enregistré
-    // maxStation va diminuer au fur et à mesure que des stations vont arrêter leurs relevés
-    // on skippera les nouvelles stations car elles non plus ne seront pas complètes
+    size_t maxStation = _vRawData[0].size(); // nombre de stations du premier mois enregistrÃ©
+    // maxStation va diminuer au fur et Ã  mesure que des stations vont arrÃªter leurs relevÃ©s
+    // on skippera les nouvelles stations car elles non plus ne seront pas complÃ¨tes
     size_t monthRecorded = nbMonths();
   
     std::vector<int> vIDstation(maxStation);                     // vecteur des ID des stations
-    std::vector<std::vector<float>> vStationTmoy(maxStation);    // vecteur des températures moyennes
-    std::vector<std::vector<float>> vStationTsigma(maxStation);  // vecteur des écarts types moyen des températures
+    std::vector<std::vector<float>> vStationTmoy(maxStation);    // vecteur des tempÃ©ratures moyennes
+    std::vector<std::vector<float>> vStationTsigma(maxStation);  // vecteur des Ã©carts types moyen des tempÃ©ratures
  
-    // Le premier mois on remplit le vecteur d'ID et le début des vecteurs de températures
+    // Le premier mois on remplit le vecteur d'ID et le dÃ©but des vecteurs de tempÃ©ratures
     size_t nbStation = 0;
     for (const auto& [indexStation, tMoySigma] : _vRawData[0]) { // Pour chaque station du premier mois
         vIDstation[nbStation] = indexStation;
-        vStationTmoy[nbStation].resize(monthRecorded); // On réserve la place pour tous les mois
+        vStationTmoy[nbStation].resize(monthRecorded); // On rÃ©serve la place pour tous les mois
         vStationTmoy[nbStation][0] = tMoySigma.first;
-        vStationTsigma[nbStation].resize(monthRecorded); // On réserve la place pour tous les mois
+        vStationTsigma[nbStation].resize(monthRecorded); // On rÃ©serve la place pour tous les mois
         vStationTsigma[nbStation][0] = tMoySigma.second;
-        nbStation++; // On incrémente l'index des stations
+        nbStation++; // On incrÃ©mente l'index des stations
     }
 
     for (size_t month = 1; month < monthRecorded; month++) { // Pour chaque mois
-        std::vector<bool> vbIsVisited(maxStation, false); // on remet à faux pour savoir si on a bien enregistré la station
+        std::vector<bool> vbIsVisited(maxStation, false); // on remet Ã  faux pour savoir si on a bien enregistrÃ© la station
 
         for (const auto& [IDstation, tMoySigma] : _vRawData[month]) { // Pour chaque station du mois
             // On regarde si l'ID de la station n'a pas disparu
             // on skippe les nouvelles stations
             auto itIDstation = std::find(vIDstation.begin(), vIDstation.end(), IDstation);
-            if(itIDstation != vIDstation.end()) { // Si la station émet depuis le début
-                size_t iStation = std::distance(vIDstation.begin(), itIDstation); // On récupère son index
+            if(itIDstation != vIDstation.end()) { // Si la station Ã©met depuis le dÃ©but
+                size_t iStation = std::distance(vIDstation.begin(), itIDstation); // On rÃ©cupÃ¨re son index
                 vStationTmoy[iStation][month] = tMoySigma.first;
                 vStationTsigma[iStation][month] = tMoySigma.second;
                 vbIsVisited[iStation] = true;
@@ -116,16 +116,16 @@ void SAE_Datas_Heat::convertDataInList()
             }
         }
 
-        // Toutes les stations qui n'ont pas été visitées ont arrêté d'émettre et doivent être supprimées
-        for (size_t iStation = 0; iStation < maxStation;/* RIEN on incrémente seulement si la station a été visitée */) {
+        // Toutes les stations qui n'ont pas Ã©tÃ© visitÃ©es ont arrÃªtÃ© d'Ã©mettre et doivent Ãªtre supprimÃ©es
+        for (size_t iStation = 0; iStation < maxStation;/* RIEN on incrÃ©mente seulement si la station a Ã©tÃ© visitÃ©e */) {
             if (!vbIsVisited[iStation]) {
-                for (size_t i = iStation + 1; i < maxStation; i++) { // on décale toutes les stations de 1 cran à gauche
+                for (size_t i = iStation + 1; i < maxStation; i++) { // on dÃ©cale toutes les stations de 1 cran Ã  gauche
                     vbIsVisited[i - 1] = vbIsVisited[i];
                     vIDstation[i - 1] = vIDstation[i];
                     vStationTmoy[i - 1] = vStationTmoy[i];
                     vStationTsigma[i - 1] = vStationTsigma[i];
                 }
-                maxStation--;   // on enlève la dernière
+                maxStation--;   // on enlÃ¨ve la derniÃ¨re
                 vbIsVisited.pop_back(); vbIsVisited.shrink_to_fit();
                 vIDstation.pop_back(); vIDstation.shrink_to_fit();
                 vStationTmoy.pop_back(); vStationTmoy.shrink_to_fit();
@@ -135,7 +135,7 @@ void SAE_Datas_Heat::convertDataInList()
                 iStation++;
         }
     }
-    // Il ne reste que 18 stations complètes
+    // Il ne reste que 18 stations complÃ¨tes
     // 
     // A COMPLETER
     // vous devez maintenant creer la structure arborescente 

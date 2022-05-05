@@ -15,8 +15,5 @@ public:
 	size_t nbelem() const;
 	CelluleStation* recherche_ptr(int cle)const;  
 	void supprime_cellule(int cle);
-
-	
-
 };
 
